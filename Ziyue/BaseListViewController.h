@@ -16,9 +16,7 @@
 
 }
 
-
-- (NSInteger)numberOfRowsInSection:(NSInteger)section;
-
+- (void)endLoadData;
 
 
 @end

@@ -9,7 +9,9 @@
 #import "BaseListViewController.h"
 #import "NetModel.h"
 
-@interface BaseListViewController () 
+@interface BaseListViewController ()  {
+    UIActivityIndicatorView * _indicatorView;
+}
 @end
 
 @implementation BaseListViewController
@@ -43,9 +45,17 @@
     _myTableView.backgroundColor = [UIColor clearColor];
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
+    _myTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:_myTableView];
+    _myTableView.hidden = YES;
     
     _dataArray = [[NSMutableArray alloc] init];
+
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.view addSubview:_indicatorView];
+    _indicatorView.hidesWhenStopped = YES;
+    _indicatorView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
+    [_indicatorView startAnimating];
 
 }
 
@@ -54,6 +64,22 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     PrintSelfInfo;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _netModel.delegate = self;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    _netModel.delegate = nil;
+}
+
+- (void)endLoadData {
+    [_indicatorView stopAnimating];
+    _myTableView.hidden = NO;
+    [_myTableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

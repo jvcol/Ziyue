@@ -10,11 +10,7 @@
 #import "NetModel.h"
 #import "ZYCourseDetailViewController.h"
 
-@interface ZYCourseListViewController () <UITableViewDataSource,UITableViewDelegate> {
-    UITableView * _mytableView;
-    NSMutableArray * _dataArray;
-    NetModel * _netModel;
-}
+@interface ZYCourseListViewController ()
 
 @end
 
@@ -34,17 +30,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    _netModel = [[NetModel alloc] init];
-    _netModel.delegate = self;
-
-    _mytableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-    _mytableView.backgroundColor = [UIColor clearColor];
-    _mytableView.delegate = self;
-    _mytableView.dataSource = self;
-    [self.view addSubview:_mytableView];
-    
-    _dataArray = [[NSMutableArray alloc] init];
-        
     [self loadData];
 }
 
@@ -99,7 +84,7 @@
 
     [_dataArray removeAllObjects];
     [_dataArray addObjectsFromArray:array];
-    [_mytableView reloadData];
+    [self endLoadData];
 }
 
 - (void)apiFailed:(NSDictionary *)dic WithMsg:(NSString *)msg {

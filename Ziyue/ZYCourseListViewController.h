@@ -6,8 +6,8 @@
 //  Copyright (c) 2013年 yangw. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseListViewController.h"
 
-@interface ZYCourseListViewController : BaseViewController
+@interface ZYCourseListViewController : BaseListViewController
 
 @end
