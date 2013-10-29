@@ -14,6 +14,12 @@
 
 #define PrintSelfInfo     NSLog(@"class: %@ -> function: %@",NSStringFromClass([self class]),NSStringFromSelector(_cmd));
 
+#define FONT(a) [UIFont systemFontOfSize:a]
+#define RGB3(a) [UIColor colorWithRed:(a)/255.0 green:(a)/255.0 blue:(a)/255.0 alpha:1]
+#define RGB(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
+#define iOS7 (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)?YES:NO)
+
+NSString * getTimeStr(int timeStamp);
 
 @interface Utility : NSObject
 
