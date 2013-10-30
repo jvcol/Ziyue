@@ -19,7 +19,18 @@
 #define RGB(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 #define iOS7 (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)?YES:NO)
 
+#define CLIENT_AGENT @"iPhoneClient"
+
 NSString * getTimeStr(int timeStamp);
+
+BOOL hdEnsurePath(NSString* path);
+
+
+@interface NSString(encoding)
+- (NSString*)md5;
+- (NSString *)encodeString:(NSStringEncoding)encoding;
+
+@end
 
 @interface Utility : NSObject
 

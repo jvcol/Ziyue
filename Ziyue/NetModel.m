@@ -3,7 +3,6 @@
 #import "NetModel.h"
 #import "Utility.h"
 
-#define CLIENT_AGENT @"iPhoneClient"
 #define API_REQUEST     0
 
 @interface NetModel (Private)

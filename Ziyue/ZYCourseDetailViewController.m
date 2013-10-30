@@ -10,6 +10,7 @@
 #import "NetModel.h"
 #import "VedioViewController.h"
 #import "UIImageView+WebCache.h"
+#import "ZYDataCenter.h"
 
 @interface ZYCourseDetailViewController () <NetModelDelegate> {
     
@@ -21,7 +22,7 @@
     NSMutableArray * _selected2Download;
     
 }
-@property (nonatomic, retain) NSDictionary * courseInfoDic;
+@property (nonatomic, retain) NSMutableDictionary * courseInfoDic;
 
 @end
 
@@ -120,6 +121,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft];
+    /*
+     - (void)showAlbum {
+     // check current orientation
+     if ([[UIApplication sharedApplication] statusBarOrientation] != UIInterfaceOrientationLandscapeLeft) {
+     // no, the orientation is wrong, we must rotate the UI
+     self.navigationController.view.userInteractionEnabled = NO;
+     [UIView beginAnimations:@"newAlbum" context:NULL];
+     [UIView setAnimationDelegate:self];
+     // when rotation is done, we can add new views, because UI orientation is OK
+     [UIView setAnimationDidStopSelector:@selector(addAlbum)];
+     // setup status bar
+     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft  animated:NO];
+     // rotate main view, in this sample the view of navigation controller is the root view in main window
+     [self.navigationController.view setTransform: CGAffineTransformMakeRotation(M_PI / 2)];
+     // set size of view
+     [self.navigationController.view setFrame:CGRectMake(0, 0, 748, 1024)];
+     [UIView commitAnimations];
+     } else {
+     [self addAlbum];
+     }
+     
+     }*/
+}
+
 - (void)downLoad {
     _isEditingModel = !_isEditingModel;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:_isEditingModel ? @"完成": @"下载" style:UIBarButtonItemStylePlain target:self action:@selector(downLoad)];
@@ -127,6 +155,11 @@
     
     if (!_isEditingModel && _selected2Download.count > 0) {
         // down load
+        NSMutableArray * array = [NSMutableArray array];
+        for (int ii=0; ii<_selected2Download.count; ii++) {
+            [array addObject:[_dataArray objectAtIndex:[[_selected2Download objectAtIndex:ii] intValue]]];
+        }
+        [[ZYDataCenter instance] downLoadCourse:self.courseInfoDic chapters:array];
     }
 }
 
@@ -302,7 +335,8 @@
             MPMoviePlayerController *player = [playerViewController moviePlayer];
             player.repeatMode = MPMovieRepeatModeOne;
             [player setContentURL:[NSURL URLWithString:url]];
-            [self presentModalViewController:playerViewController animated:animated];
+//            [self presentModalViewController:playerViewController animated:animated];
+            [self presentMoviePlayerViewControllerAnimated:playerViewController];
             [player play];
         }
     }
@@ -337,11 +371,11 @@
 //    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[dic objectForKey:@"author"] message:[dic objectForKey:@"title_ch"] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
 //    [alert show];
     
-    self.courseInfoDic = dic;
+    self.courseInfoDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     [self refreshTopViewWithData];
     
     NSMutableArray * chapters = [[dictionary objectForKey:@"data"] objectForKey:@"chapters"];
-    NSLog(@"%@",chapters);
+//    NSLog(@"%@",chapters);
     if (![chapters isKindOfClass:[NSMutableArray class]]) {
         return;
     }
@@ -352,6 +386,7 @@
             [_dataArray addObject:item];
         }
     }
+    [self.courseInfoDic setObject:[NSNumber numberWithInt:_dataArray.count] forKey:@"chaptnum"];
     [self endLoadData];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下载" style:UIBarButtonItemStylePlain target:self action:@selector(downLoad)];

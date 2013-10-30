@@ -8,6 +8,7 @@
 
 #import "ZYAppDelegate.h"
 #import "ZYViewController.h"
+#import "ZYDataCenter.h"
 
 @implementation ZYAppDelegate
 
@@ -23,6 +24,10 @@
     self.window.rootViewController = nav;
     
     [self.window makeKeyAndVisible];
+    
+    [ZYDataCenter instance];
+    NSLog(@"%@",[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
+    
     return YES;
 }
 

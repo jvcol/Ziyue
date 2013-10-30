@@ -13,6 +13,8 @@
 		4E3660B6181BBE890005A327 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3660B5181BBE890005A327 /* libz.1.1.3.dylib */; };
 		4E3660B8181BBEA40005A327 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3660B7181BBEA40005A327 /* libxml2.2.dylib */; };
 		4E3660BA181BBEAD0005A327 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3660B9181BBEAD0005A327 /* libxml2.dylib */; };
+		4E46EC3F182145C700E1B5D5 /* ZYCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E46EC3E182145C700E1B5D5 /* ZYCourse.m */; };
+		4E46EC42182145D700E1B5D5 /* ZYChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E46EC41182145D700E1B5D5 /* ZYChapter.m */; };
 		4E4D6014181FE86C0043638E /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D5FF8181FE86C0043638E /* MKAnnotationView+WebCache.m */; };
 		4E4D6015181FE86C0043638E /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D5FFA181FE86C0043638E /* NSData+GIF.m */; };
 		4E4D6016181FE86C0043638E /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D5FFC181FE86C0043638E /* SDImageCache.m */; };
@@ -65,6 +67,16 @@
 		4E4FCE3A181BBC010025F633 /* ASIS3Request.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4FCE20181BBC010025F633 /* ASIS3Request.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4E4FCE3B181BBC010025F633 /* ASIS3ServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4FCE22181BBC010025F633 /* ASIS3ServiceRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4E4FCE3C181BBC010025F633 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4FCE25181BBC010025F633 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4E8E797B1820E23F005CA37A /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E79721820E23F005CA37A /* FMDatabase.m */; };
+		4E8E797C1820E23F005CA37A /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E79741820E23F005CA37A /* FMDatabaseAdditions.m */; };
+		4E8E797D1820E23F005CA37A /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E79761820E23F005CA37A /* FMDatabasePool.m */; };
+		4E8E797E1820E23F005CA37A /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E79781820E23F005CA37A /* FMDatabaseQueue.m */; };
+		4E8E797F1820E23F005CA37A /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E797A1820E23F005CA37A /* FMResultSet.m */; };
+		4E8E79811820E268005CA37A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8E79801820E268005CA37A /* libsqlite3.dylib */; };
+		4E8E79871820E7CD005CA37A /* HDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E79841820E7CD005CA37A /* HDBHelper.m */; };
+		4E8E79881820E7CD005CA37A /* HDOperationList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E79861820E7CD005CA37A /* HDOperationList.m */; };
+		4E8E798C1820ECBB005CA37A /* DownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E798B1820ECBB005CA37A /* DownloadModel.m */; };
+		4E8E798F182108CF005CA37A /* ZYDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8E798E182108CF005CA37A /* ZYDataCenter.m */; };
 		4EBDDF27181BDA0100FCE190 /* ZYCourseDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBDDF26181BDA0100FCE190 /* ZYCourseDetailViewController.m */; };
 		4EBDDF2A181BDA9400FCE190 /* BaseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBDDF29181BDA9400FCE190 /* BaseListViewController.m */; };
 		4EBDDF2C181BF29A00FCE190 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EBDDF2B181BF29A00FCE190 /* MediaPlayer.framework */; };
@@ -103,6 +115,10 @@
 		4E3660B5181BBE890005A327 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		4E3660B7181BBEA40005A327 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		4E3660B9181BBEAD0005A327 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		4E46EC3D182145C700E1B5D5 /* ZYCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYCourse.h; sourceTree = "<group>"; };
+		4E46EC3E182145C700E1B5D5 /* ZYCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYCourse.m; sourceTree = "<group>"; };
+		4E46EC40182145D700E1B5D5 /* ZYChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYChapter.h; sourceTree = "<group>"; };
+		4E46EC41182145D700E1B5D5 /* ZYChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYChapter.m; sourceTree = "<group>"; };
 		4E4D5FF7181FE86C0043638E /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		4E4D5FF8181FE86C0043638E /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		4E4D5FF9181FE86C0043638E /* NSData+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+GIF.h"; sourceTree = "<group>"; };
@@ -205,6 +221,25 @@
 		4E4FCE22181BBC010025F633 /* ASIS3ServiceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIS3ServiceRequest.m; sourceTree = "<group>"; };
 		4E4FCE24181BBC010025F633 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		4E4FCE25181BBC010025F633 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		4E8E79711820E23F005CA37A /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		4E8E79721820E23F005CA37A /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		4E8E79731820E23F005CA37A /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		4E8E79741820E23F005CA37A /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		4E8E79751820E23F005CA37A /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		4E8E79761820E23F005CA37A /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		4E8E79771820E23F005CA37A /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		4E8E79781820E23F005CA37A /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		4E8E79791820E23F005CA37A /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		4E8E797A1820E23F005CA37A /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		4E8E79801820E268005CA37A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		4E8E79831820E7CD005CA37A /* HDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDBHelper.h; sourceTree = "<group>"; };
+		4E8E79841820E7CD005CA37A /* HDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDBHelper.m; sourceTree = "<group>"; };
+		4E8E79851820E7CD005CA37A /* HDOperationList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDOperationList.h; sourceTree = "<group>"; };
+		4E8E79861820E7CD005CA37A /* HDOperationList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDOperationList.m; sourceTree = "<group>"; };
+		4E8E798A1820ECBB005CA37A /* DownloadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadModel.h; sourceTree = "<group>"; };
+		4E8E798B1820ECBB005CA37A /* DownloadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadModel.m; sourceTree = "<group>"; };
+		4E8E798D182108CF005CA37A /* ZYDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYDataCenter.h; sourceTree = "<group>"; };
+		4E8E798E182108CF005CA37A /* ZYDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYDataCenter.m; sourceTree = "<group>"; };
 		4EBDDF25181BDA0100FCE190 /* ZYCourseDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYCourseDetailViewController.h; sourceTree = "<group>"; };
 		4EBDDF26181BDA0100FCE190 /* ZYCourseDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYCourseDetailViewController.m; sourceTree = "<group>"; };
 		4EBDDF28181BDA9400FCE190 /* BaseListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseListViewController.h; sourceTree = "<group>"; };
@@ -251,6 +286,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E8E79811820E268005CA37A /* libsqlite3.dylib in Frameworks */,
 				4EBDDF2C181BF29A00FCE190 /* MediaPlayer.framework in Frameworks */,
 				4E3660BA181BBEAD0005A327 /* libxml2.dylib in Frameworks */,
 				4E3660B8181BBEA40005A327 /* libxml2.2.dylib in Frameworks */,
@@ -335,6 +371,7 @@
 		4E4FCDB3181BAD690025F633 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4E8E79801820E268005CA37A /* libsqlite3.dylib */,
 				4EBDDF2B181BF29A00FCE190 /* MediaPlayer.framework */,
 				4E3660B9181BBEAD0005A327 /* libxml2.dylib */,
 				4E3660B7181BBEA40005A327 /* libxml2.2.dylib */,
@@ -371,6 +408,8 @@
 				4EBDDF26181BDA0100FCE190 /* ZYCourseDetailViewController.m */,
 				4EC93E9B181BF3080066434F /* VedioViewController.h */,
 				4EC93E9C181BF3080066434F /* VedioViewController.m */,
+				4E8E79821820E7A9005CA37A /* DBHelper */,
+				4E8E79891820EC8B005CA37A /* DownloadModel */,
 				4E4FCDEC181BB1A70025F633 /* ThirdLibs */,
 				4E4FCDC6181BAD690025F633 /* Images.xcassets */,
 				4E4FCDBB181BAD690025F633 /* Supporting Files */,
@@ -410,6 +449,7 @@
 		4E4FCDEC181BB1A70025F633 /* ThirdLibs */ = {
 			isa = PBXGroup;
 			children = (
+				4E8E79701820E23F005CA37A /* FMDB */,
 				4E4D5FF6181FE86C0043638E /* SDWebImage */,
 				4EEA4112181BC55D00623BCC /* SBJson */,
 				4EEA410E181BC4CC00623BCC /* JsonData */,
@@ -514,6 +554,49 @@
 				4E4FCE25181BBC010025F633 /* Reachability.m */,
 			);
 			path = Reachability;
+			sourceTree = "<group>";
+		};
+		4E8E79701820E23F005CA37A /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				4E8E79711820E23F005CA37A /* FMDatabase.h */,
+				4E8E79721820E23F005CA37A /* FMDatabase.m */,
+				4E8E79731820E23F005CA37A /* FMDatabaseAdditions.h */,
+				4E8E79741820E23F005CA37A /* FMDatabaseAdditions.m */,
+				4E8E79751820E23F005CA37A /* FMDatabasePool.h */,
+				4E8E79761820E23F005CA37A /* FMDatabasePool.m */,
+				4E8E79771820E23F005CA37A /* FMDatabaseQueue.h */,
+				4E8E79781820E23F005CA37A /* FMDatabaseQueue.m */,
+				4E8E79791820E23F005CA37A /* FMResultSet.h */,
+				4E8E797A1820E23F005CA37A /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
+		4E8E79821820E7A9005CA37A /* DBHelper */ = {
+			isa = PBXGroup;
+			children = (
+				4E8E79831820E7CD005CA37A /* HDBHelper.h */,
+				4E8E79841820E7CD005CA37A /* HDBHelper.m */,
+				4E8E79851820E7CD005CA37A /* HDOperationList.h */,
+				4E8E79861820E7CD005CA37A /* HDOperationList.m */,
+				4E8E798D182108CF005CA37A /* ZYDataCenter.h */,
+				4E8E798E182108CF005CA37A /* ZYDataCenter.m */,
+				4E46EC3D182145C700E1B5D5 /* ZYCourse.h */,
+				4E46EC3E182145C700E1B5D5 /* ZYCourse.m */,
+				4E46EC40182145D700E1B5D5 /* ZYChapter.h */,
+				4E46EC41182145D700E1B5D5 /* ZYChapter.m */,
+			);
+			name = DBHelper;
+			sourceTree = "<group>";
+		};
+		4E8E79891820EC8B005CA37A /* DownloadModel */ = {
+			isa = PBXGroup;
+			children = (
+				4E8E798A1820ECBB005CA37A /* DownloadModel.h */,
+				4E8E798B1820ECBB005CA37A /* DownloadModel.m */,
+			);
+			name = DownloadModel;
 			sourceTree = "<group>";
 		};
 		4EEA410E181BC4CC00623BCC /* JsonData */ = {
@@ -666,7 +749,9 @@
 				4E4FCE26181BBC010025F633 /* ASIAuthenticationDialog.m in Sources */,
 				4E4D6021181FE86C0043638E /* UIImageView+WebCache.m in Sources */,
 				4E4FCE27181BBC010025F633 /* ASIDataCompressor.m in Sources */,
+				4E8E797D1820E23F005CA37A /* FMDatabasePool.m in Sources */,
 				4E4FCDC1181BAD690025F633 /* main.m in Sources */,
+				4E8E797C1820E23F005CA37A /* FMDatabaseAdditions.m in Sources */,
 				4EEA410A181BC02100623BCC /* ZYCourseListViewController.m in Sources */,
 				4EEA4131181BC55D00623BCC /* SBJsonStreamParserAccumulator.m in Sources */,
 				4E4D601F181FE86C0043638E /* UIImage+MultiFormat.m in Sources */,
@@ -679,12 +764,18 @@
 				4EEA4139181BC55D00623BCC /* SBJsonWriter.m in Sources */,
 				4EC93E9D181BF3080066434F /* VedioViewController.m in Sources */,
 				4E4FCE2A181BBC010025F633 /* ASIFormDataRequest.m in Sources */,
+				4E8E797F1820E23F005CA37A /* FMResultSet.m in Sources */,
 				4E4FCE29181BBC010025F633 /* ASIDownloadCache.m in Sources */,
+				4E8E79881820E7CD005CA37A /* HDOperationList.m in Sources */,
 				4EEA4138181BC55D00623BCC /* SBJsonUTF8Stream.m in Sources */,
 				4E4FCE2F181BBC010025F633 /* ASICloudFilesCDNRequest.m in Sources */,
 				4E4FCE2C181BBC010025F633 /* ASIInputStream.m in Sources */,
+				4E8E797B1820E23F005CA37A /* FMDatabase.m in Sources */,
 				4E4FCE3C181BBC010025F633 /* Reachability.m in Sources */,
+				4E8E79871820E7CD005CA37A /* HDBHelper.m in Sources */,
+				4E8E797E1820E23F005CA37A /* FMDatabaseQueue.m in Sources */,
 				4E4FCE34181BBC010025F633 /* ASICloudFilesObjectRequest.m in Sources */,
+				4E8E798F182108CF005CA37A /* ZYDataCenter.m in Sources */,
 				4E4D6019181FE86C0043638E /* SDWebImageDownloader.m in Sources */,
 				4E4D601D181FE86C0043638E /* UIButton+WebCache.m in Sources */,
 				4EEA410D181BC4C600623BCC /* NetModel.m in Sources */,
@@ -709,7 +800,9 @@
 				4E4FCE38181BBC010025F633 /* ASIS3BucketRequest.m in Sources */,
 				4E4D601C181FE86C0043638E /* SDWebImagePrefetcher.m in Sources */,
 				4EEA4136181BC55D00623BCC /* SBJsonStreamWriterState.m in Sources */,
+				4E46EC3F182145C700E1B5D5 /* ZYCourse.m in Sources */,
 				4EEA4130181BC55D00623BCC /* SBJsonStreamParser.m in Sources */,
+				4E8E798C1820ECBB005CA37A /* DownloadModel.m in Sources */,
 				4E4FCE30181BBC010025F633 /* ASICloudFilesContainer.m in Sources */,
 				4EBDDF27181BDA0100FCE190 /* ZYCourseDetailViewController.m in Sources */,
 				4E4FCE35181BBC010025F633 /* ASICloudFilesRequest.m in Sources */,
@@ -721,6 +814,7 @@
 				4EEA412E181BC55D00623BCC /* NSObject+SBJson.m in Sources */,
 				4E4D601E181FE86C0043638E /* UIImage+GIF.m in Sources */,
 				4E4FCE36181BBC010025F633 /* ASIS3Bucket.m in Sources */,
+				4E46EC42182145D700E1B5D5 /* ZYChapter.m in Sources */,
 				4EEA4132181BC55D00623BCC /* SBJsonStreamParserAdapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
