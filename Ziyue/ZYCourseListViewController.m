@@ -10,6 +10,7 @@
 #import "NetModel.h"
 #import "ZYCourseDetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "ZYDownloadListViewController.h"
 
 @interface ZYCourseListViewController ()
 
@@ -31,8 +32,16 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = @"课程列表";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"我的下载" style:UIBarButtonItemStylePlain target:self action:@selector(downloadcenter)];
 
     [self loadData];
+}
+
+- (void)downloadcenter {
+    ZYDownloadListViewController * vc = [[ZYDownloadListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    vc = nil;
 }
 
 - (void)loadData {

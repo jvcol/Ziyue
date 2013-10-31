@@ -33,6 +33,14 @@
     return self;
 }
 
+- (void)dealloc {
+    [_dataArray removeAllObjects];
+    _myTableView = nil;
+    _netModel.delegate = nil;
+    _netModel = nil;
+    _indicatorView = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

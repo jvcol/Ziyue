@@ -2,7 +2,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define DownloadFilePath @"moviesData"
 
 @protocol DownloadModelDelegate <NSObject>
 

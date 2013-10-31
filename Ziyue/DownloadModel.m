@@ -74,8 +74,8 @@
     [request setUserInfo:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:path, fullUrl,[NSNumber numberWithInt:tag], [NSValue valueWithNonretainedObject:validator], @"voice",nil] forKeys:[NSArray arrayWithObjects:@"path",@"fullpath", @"tag",@"validator",@"type", nil]]];
     [request setTag:2];         //1代表图片访问, 2代表声音访问
     
-    if (!hdEnsurePath([path stringByDeletingLastPathComponent]))
-        return;
+//    if (!hdEnsurePath([path stringByDeletingLastPathComponent]))
+//        return;
     if ([[NSFileManager defaultManager] fileExistsAtPath:path] == YES) {
 		[self fileDownloaded:request.userInfo forType:request.tag];
         return;
@@ -84,7 +84,7 @@
     
     [request setTimeOutSeconds:30];
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
-	[request setShouldContinueWhenAppEntersBackground:YES];
+//	[request setShouldContinueWhenAppEntersBackground:YES];
 #endif
     [networkQueue addOperation:request];
     if ([networkQueue requestsCount] == 1) {

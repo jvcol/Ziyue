@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "BaseViewController.h"
 
+
+#define DownloadFilePath @"moviesData"
+
+
+
 #define isiPad ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? YES : NO
 
 
@@ -25,6 +30,7 @@ NSString * getTimeStr(int timeStamp);
 
 BOOL hdEnsurePath(NSString* path);
 
+NSString * bytesToString(unsigned long long bytes);
 
 @interface NSString(encoding)
 - (NSString*)md5;

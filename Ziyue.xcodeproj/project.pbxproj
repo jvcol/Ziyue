@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E1894D01822A76000E3AD11 /* ZYDownloadingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1894CF1822A76000E3AD11 /* ZYDownloadingListViewController.m */; };
 		4E20A85F181BBE3700C60380 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E20A85E181BBE3700C60380 /* CFNetwork.framework */; };
 		4E20A861181BBE4300C60380 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E20A860181BBE4300C60380 /* SystemConfiguration.framework */; };
 		4E3660B4181BBE640005A327 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3660B3181BBE640005A327 /* MobileCoreServices.framework */; };
@@ -15,6 +16,7 @@
 		4E3660BA181BBEAD0005A327 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3660B9181BBEAD0005A327 /* libxml2.dylib */; };
 		4E46EC3F182145C700E1B5D5 /* ZYCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E46EC3E182145C700E1B5D5 /* ZYCourse.m */; };
 		4E46EC42182145D700E1B5D5 /* ZYChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E46EC41182145D700E1B5D5 /* ZYChapter.m */; };
+		4E46EC4B1822508A00E1B5D5 /* ZYDownloadListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E46EC4A1822508A00E1B5D5 /* ZYDownloadListViewController.m */; };
 		4E4D6014181FE86C0043638E /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D5FF8181FE86C0043638E /* MKAnnotationView+WebCache.m */; };
 		4E4D6015181FE86C0043638E /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D5FFA181FE86C0043638E /* NSData+GIF.m */; };
 		4E4D6016181FE86C0043638E /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D5FFC181FE86C0043638E /* SDImageCache.m */; };
@@ -109,6 +111,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E1894CE1822A76000E3AD11 /* ZYDownloadingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYDownloadingListViewController.h; sourceTree = "<group>"; };
+		4E1894CF1822A76000E3AD11 /* ZYDownloadingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYDownloadingListViewController.m; sourceTree = "<group>"; };
 		4E20A85E181BBE3700C60380 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4E20A860181BBE4300C60380 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4E3660B3181BBE640005A327 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -119,6 +123,8 @@
 		4E46EC3E182145C700E1B5D5 /* ZYCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYCourse.m; sourceTree = "<group>"; };
 		4E46EC40182145D700E1B5D5 /* ZYChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYChapter.h; sourceTree = "<group>"; };
 		4E46EC41182145D700E1B5D5 /* ZYChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYChapter.m; sourceTree = "<group>"; };
+		4E46EC491822508A00E1B5D5 /* ZYDownloadListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYDownloadListViewController.h; sourceTree = "<group>"; };
+		4E46EC4A1822508A00E1B5D5 /* ZYDownloadListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYDownloadListViewController.m; sourceTree = "<group>"; };
 		4E4D5FF7181FE86C0043638E /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		4E4D5FF8181FE86C0043638E /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		4E4D5FF9181FE86C0043638E /* NSData+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+GIF.h"; sourceTree = "<group>"; };
@@ -404,6 +410,10 @@
 				4E4FCDEA181BB0A20025F633 /* ZYViewController.m */,
 				4EEA4108181BC02100623BCC /* ZYCourseListViewController.h */,
 				4EEA4109181BC02100623BCC /* ZYCourseListViewController.m */,
+				4E46EC491822508A00E1B5D5 /* ZYDownloadListViewController.h */,
+				4E46EC4A1822508A00E1B5D5 /* ZYDownloadListViewController.m */,
+				4E1894CE1822A76000E3AD11 /* ZYDownloadingListViewController.h */,
+				4E1894CF1822A76000E3AD11 /* ZYDownloadingListViewController.m */,
 				4EBDDF25181BDA0100FCE190 /* ZYCourseDetailViewController.h */,
 				4EBDDF26181BDA0100FCE190 /* ZYCourseDetailViewController.m */,
 				4EC93E9B181BF3080066434F /* VedioViewController.h */,
@@ -772,6 +782,7 @@
 				4E4FCE2C181BBC010025F633 /* ASIInputStream.m in Sources */,
 				4E8E797B1820E23F005CA37A /* FMDatabase.m in Sources */,
 				4E4FCE3C181BBC010025F633 /* Reachability.m in Sources */,
+				4E1894D01822A76000E3AD11 /* ZYDownloadingListViewController.m in Sources */,
 				4E8E79871820E7CD005CA37A /* HDBHelper.m in Sources */,
 				4E8E797E1820E23F005CA37A /* FMDatabaseQueue.m in Sources */,
 				4E4FCE34181BBC010025F633 /* ASICloudFilesObjectRequest.m in Sources */,
@@ -808,6 +819,7 @@
 				4E4FCE35181BBC010025F633 /* ASICloudFilesRequest.m in Sources */,
 				4E4FCDEB181BB0A20025F633 /* ZYViewController.m in Sources */,
 				4E4FCE37181BBC010025F633 /* ASIS3BucketObject.m in Sources */,
+				4E46EC4B1822508A00E1B5D5 /* ZYDownloadListViewController.m in Sources */,
 				4E4FCE3A181BBC010025F633 /* ASIS3Request.m in Sources */,
 				4E4D6014181FE86C0043638E /* MKAnnotationView+WebCache.m in Sources */,
 				4E4FCDC5181BAD690025F633 /* ZYAppDelegate.m in Sources */,

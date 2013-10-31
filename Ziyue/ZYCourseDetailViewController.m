@@ -310,8 +310,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    _currentSelectedIndex = indexPath.row;
-    [self play:YES];
+    if (type == 0) {
+        _currentSelectedIndex = indexPath.row;
+        [self play:YES];
+    }
 
 }
 

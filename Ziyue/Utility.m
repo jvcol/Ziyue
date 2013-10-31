@@ -43,6 +43,20 @@ BOOL hdEnsurePath(NSString* path) {
     return TRUE;
 }
 
+NSString * bytesToString(unsigned long long bytes) {
+    bytes = MAX(bytes, 0);
+    if (bytes < (1<<10)) {
+        return [NSString stringWithFormat:@"%lld B", bytes];
+    } else if (bytes < (1<<20)) {
+        return [NSString stringWithFormat:@"%.1f KB", ((CGFloat)bytes) / (1<<10)];
+    } else if (bytes < (1<<30)) {
+        return [NSString stringWithFormat:@"%.1f MB", ((CGFloat)bytes) / (1<<20)];
+    } else {
+        return [NSString stringWithFormat:@"%.1f GB", ((CGFloat)bytes) / (1<<30)];
+    }
+}
+
+
 @implementation NSString(encoding)
 - (NSString*)md5 {
     
