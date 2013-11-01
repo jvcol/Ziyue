@@ -187,23 +187,24 @@
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIndentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        UILabel * lable1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 30, 20)];
-        lable1.font = FONT(15);
+        UILabel * lable1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 40, 20)];
+        lable1.font = FONT(13);
         lable1.tag = 100;
         lable1.text = @"类型：";
         lable1.textColor = [UIColor redColor];
         [cell.contentView addSubview:lable1];
         
-        UILabel * lable2 = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, 30, 20)];
-        lable2.font = FONT(15);
+        UILabel * lable2 = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, 40, 20)];
+        lable2.font = FONT(13);
         lable2.tag = 200;
         lable2.text = @"讲师：";
         lable2.textColor = [UIColor redColor];
         [cell.contentView addSubview:lable2];
 
-        UILabel * lable3 = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 30, 20)];
-        lable3.font = FONT(15);
+        UILabel * lable3 = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 40, 20)];
+        lable3.font = FONT(13);
         lable3.tag = 300;
         lable3.text = @"简介：";
         lable3.textColor = [UIColor redColor];
@@ -286,6 +287,14 @@
         [button addTarget:self action:@selector(downLoadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         button.hidden = YES;
         
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(tableView.frame)-90, 60, 90, 15)];
+        label.tag = 101;
+        label.backgroundColor = [UIColor clearColor];
+        label.text = @"已下载";
+        [cell.contentView addSubview:label];
+        label.hidden = YES;
+        label = nil;
+        
     }
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"title"]];
@@ -303,6 +312,11 @@
             [button setTitle:@"选择" forState:UIControlStateNormal];
             [button setTitleColor:RGB3(255) forState:UIControlStateNormal];
         }
+    }
+    
+    UILabel * label = (UILabel *)[cell.contentView viewWithTag:101];
+    if (label) {
+        
     }
     
     return cell;

@@ -53,7 +53,7 @@
 
 - (void)downloadNetMediaWithUrl:(NSString *)fullUrl tag:(int)tag validator:(id)validator {
     NSURL *url = [NSURL URLWithString:fullUrl];
-
+    
     NSString * str = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     str = [str stringByAppendingPathComponent:DownloadFilePath];
     if (![[NSFileManager defaultManager] fileExistsAtPath:str])

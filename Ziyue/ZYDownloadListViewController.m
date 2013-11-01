@@ -160,14 +160,14 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIndentifier];
         
-        UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 170, 15)];
+        UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 170, 20)];
         titleLabel.numberOfLines = 2;
         titleLabel.font = [UIFont systemFontOfSize:13];
         titleLabel.tag = 101;
         [cell.contentView addSubview:titleLabel];
         titleLabel = nil;
         
-        UILabel * sizelabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 170, 15)];
+        UILabel * sizelabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 28, 170, 15)];
         sizelabel.font = [UIFont systemFontOfSize:13];
         sizelabel.tag = 102;
         [cell.contentView addSubview:sizelabel];
@@ -215,7 +215,7 @@
     str = [str stringByAppendingPathComponent:DownloadFilePath];
     NSString * path = [str stringByAppendingPathComponent:[url md5]];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        path = [path stringByAppendingPathExtension:@"mp4"];
+//        path = [path stringByAppendingPathExtension:@"mp4"];
         VedioViewController * playerViewController = [[VedioViewController alloc] initWithContentURL:[NSURL URLWithString:url]];
         playerViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         MPMoviePlayerController *player = [playerViewController moviePlayer];

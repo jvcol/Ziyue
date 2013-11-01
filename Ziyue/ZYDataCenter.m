@@ -212,7 +212,6 @@
 - (void)didFileDownloaded:(NSString*)path tag:(NSInteger)tag validator:(id)validator {
     if (_waitingDownloadChapter.count > 0) {
         NSDictionary * dic = [_waitingDownloadChapter objectAtIndex:0];
-        [self saveChapterInfo:dic];
         
         NSMutableDictionary * chaptdic = [NSMutableDictionary dictionaryWithDictionary:dic];
         [chaptdic setObject:[NSNumber numberWithInt:DownloadState_Complete] forKey:@"downloadState"];
@@ -240,12 +239,23 @@
 }
 
 - (void)didFileDownloadReceiveBytes:(long long)bytes {
-    NSLog(@"%lld",bytes);
+//    NSLog(@"%lld",bytes);
+    
+    /*
+     http://ziyue.tv/file/video/ch_id/152951/token/5273021160b4c.html -- d73de3aaeea590dccbefa0bb80c85675
+     http://ziyue.tv/file/video/ch_id/152954/token/5273021160e3e.html -- 0f7a066f3ea78bc24e7e3400c88bf023
+     
+     http://ziyue.tv/file/video/ch_id/152951/token/5273021160b4c.html -- d73de3aaeea590dccbefa0bb80c85675
+     http://ziyue.tv/file/video/ch_id/152953/token/5273021160cfd.html -- 4bcd6a369e34f35c3f3091c8ef0963b6
+     
+     http://ziyue.tv/file/video/ch_id/152951/token/5273021160b4c.html -- d73de3aaeea590dccbefa0bb80c85675
+     */
 }
 
 - (void)didFileDownLoadedFailed:(int)tag {
-    [self stop];
-    [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Finished object:nil];
+    NSLog(@"file download failed");
+//    [self stop];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Finished object:nil];
 
 }
 
