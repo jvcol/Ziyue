@@ -84,7 +84,7 @@
     
     [request setTimeOutSeconds:30];
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
-//	[request setShouldContinueWhenAppEntersBackground:YES];
+	[request setShouldContinueWhenAppEntersBackground:YES];
 #endif
     [networkQueue addOperation:request];
     if ([networkQueue requestsCount] == 1) {

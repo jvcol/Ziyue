@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E1894D01822A76000E3AD11 /* ZYDownloadingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1894CF1822A76000E3AD11 /* ZYDownloadingListViewController.m */; };
+		4E1894D318239CAD00E3AD11 /* NSDictionary+ValuePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1894D218239CAD00E3AD11 /* NSDictionary+ValuePath.m */; };
 		4E20A85F181BBE3700C60380 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E20A85E181BBE3700C60380 /* CFNetwork.framework */; };
 		4E20A861181BBE4300C60380 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E20A860181BBE4300C60380 /* SystemConfiguration.framework */; };
 		4E3660B4181BBE640005A327 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E3660B3181BBE640005A327 /* MobileCoreServices.framework */; };
@@ -113,6 +114,8 @@
 /* Begin PBXFileReference section */
 		4E1894CE1822A76000E3AD11 /* ZYDownloadingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYDownloadingListViewController.h; sourceTree = "<group>"; };
 		4E1894CF1822A76000E3AD11 /* ZYDownloadingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYDownloadingListViewController.m; sourceTree = "<group>"; };
+		4E1894D118239CAD00E3AD11 /* NSDictionary+ValuePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+ValuePath.h"; sourceTree = "<group>"; };
+		4E1894D218239CAD00E3AD11 /* NSDictionary+ValuePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+ValuePath.m"; sourceTree = "<group>"; };
 		4E20A85E181BBE3700C60380 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4E20A860181BBE4300C60380 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4E3660B3181BBE640005A327 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -400,6 +403,8 @@
 				4E4FCDC4181BAD690025F633 /* ZYAppDelegate.m */,
 				4E4FCDE6181BAF020025F633 /* Utility.h */,
 				4E4FCDE7181BAF020025F633 /* Utility.m */,
+				4E1894D118239CAD00E3AD11 /* NSDictionary+ValuePath.h */,
+				4E1894D218239CAD00E3AD11 /* NSDictionary+ValuePath.m */,
 				4EEA410B181BC4C600623BCC /* NetModel.h */,
 				4EEA410C181BC4C600623BCC /* NetModel.m */,
 				4E4FCDE3181BAEDE0025F633 /* BaseViewController.h */,
@@ -772,6 +777,7 @@
 				4E4FCE2B181BBC010025F633 /* ASIHTTPRequest.m in Sources */,
 				4EEA4135181BC55D00623BCC /* SBJsonStreamWriterAccumulator.m in Sources */,
 				4EEA4139181BC55D00623BCC /* SBJsonWriter.m in Sources */,
+				4E1894D318239CAD00E3AD11 /* NSDictionary+ValuePath.m in Sources */,
 				4EC93E9D181BF3080066434F /* VedioViewController.m in Sources */,
 				4E4FCE2A181BBC010025F633 /* ASIFormDataRequest.m in Sources */,
 				4E8E797F1820E23F005CA37A /* FMResultSet.m in Sources */,

@@ -29,18 +29,21 @@
     return self;
 }
 
+- (void)initial {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_UpdateData object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_Update object:nil];
+    [self updateData:nil];
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = @"已下载";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下载中" style:UIBarButtonItemStylePlain target:self action:@selector(downloadingVC)];
-
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_UpdateData object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_Update object:nil];
-    [self updateData:nil];
-    
+    [self initial];
 }
 
 - (void)downloadingVC {

@@ -25,12 +25,26 @@
     return self;
 }
 
+- (void)initial {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_UpdateData object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableViewCell:) name:K_Download_Notification_Update object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_Finished object:nil];
+    
+//    [self endLoadData];
+    [self updateData:nil];
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = @"正在下载...";
     self.navigationItem.rightBarButtonItem = nil;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,27 +56,52 @@
 - (void)updateData:(NSNotification *)notification {
     
     [_dataArray removeAllObjects];
-    
-    
-    for (int ii=0; ii<[[ZYDataCenter instance] downloadCourses].count; ii++) {
-        NSDictionary * coursedic = [[[ZYDataCenter instance] downloadCourses] objectAtIndex:ii];
+        
+    NSMutableArray * courseArray = [[ZYDataCenter instance] downloadCourses];
+    NSMutableArray * chaptersArray = [[ZYDataCenter instance] downloadChapters];
+    for (int ii=0; ii<courseArray.count; ii++) {
+        NSMutableDictionary * coursedic = [courseArray objectAtIndex:ii];
         NSInteger courseid = [[coursedic objectForKey:@"_id"] integerValue];
         
         NSMutableArray * chapters = [NSMutableArray array];
-        for (NSDictionary * cpdic in [[ZYDataCenter instance] downloadChapters]) {
-            DownloadState state = (DownloadState)[[cpdic objectForKey:@"downloadState"] intValue];
+        for (NSMutableDictionary * cpdic in chaptersArray) {
+            int state = [[cpdic objectForKey:@"downloadState"] intValue];
             if ([[cpdic objectForKey:@"course_id"] integerValue] == courseid && state != DownloadState_Complete) {
                 [chapters addObject:cpdic];
             }
         }
         if (chapters.count > 0) {
-            NSMutableDictionary * mdic = [NSMutableDictionary dictionaryWithDictionary:coursedic];
-            [mdic setObject:chapters forKey:@"chapters"];
-            [_dataArray addObject:mdic];
+            [coursedic setObject:chapters forKey:@"chapters"];
+            [_dataArray addObject:coursedic];
         }
     }
     
     [self endLoadData];
+}
+
+- (void)updateTableViewCell:(NSNotification *)notification {
+    NSInteger section = NSNotFound;
+    NSInteger index = NSNotFound;
+    NSInteger courseid = [[ZYDataCenter instance].curDownloadDic intValue:@"course_id"];
+    NSInteger chapterid = [[ZYDataCenter instance].curDownloadDic intValue:@"_id"];
+    for (NSMutableDictionary * dic in _dataArray) {
+        if ([dic intValue:@"_id"] == courseid) {
+            NSArray * array = [dic objectForKey:@"chapters"];
+            if (array && [array isKindOfClass:[NSArray class]]) {
+                for (NSDictionary * cpdic in array) {
+                    if ([cpdic intValue:@"_id"] == chapterid) {
+                        index = [array indexOfObject:cpdic];
+                        section = [_dataArray indexOfObject:dic]+1;
+                    }
+                }
+            }else {
+                NSLog(@"is not a array class");
+            }
+        }
+    }
+    if (index != NSNotFound && section != NSNotFound) {
+        [_myTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:section]] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -122,6 +161,7 @@
     
     UIProgressView * progress = (UIProgressView *)[cell.contentView viewWithTag:103];
     if (progress) {
+        tsize = MAX(1, tsize);
         [progress setProgress:dsize/tsize animated:YES];
     }
     

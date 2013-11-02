@@ -13,6 +13,7 @@
 #import "ZYChapter.h"
 #import "HDOperationList.h"
 #import "DownloadModel.h"
+#import "Utility.h"
 
 #define k_Table_D_Course @"coursetable"
 #define k_Table_D_Chapter @"chaptertable"
@@ -23,10 +24,7 @@
     NSMutableArray * _allCourses;
 
     NSMutableArray * _allChapters;
-    NSMutableArray * _hasDownloadesChapters;
-    NSMutableArray * _waitingDownloadChapter;
     
-    NSInteger _downloadingChapterId;
 }
 
 @end
@@ -46,9 +44,10 @@
     _downloadModel.delegate = nil;
     _downloadModel = nil;
     
+    [_allCourses removeAllObjects];
+    
     [_allChapters removeAllObjects];
-    [_hasDownloadesChapters removeAllObjects];
-    [_waitingDownloadChapter removeAllObjects];
+    
 }
 
 - (NSMutableArray *)downloadCourses {
@@ -64,8 +63,6 @@
     if (self) {
         _allCourses = [[NSMutableArray alloc] init];
         _allChapters = [[NSMutableArray alloc] init];
-        _hasDownloadesChapters = [[NSMutableArray alloc] init];
-        _waitingDownloadChapter = [[NSMutableArray alloc] init];
         
         _downloadModel = [[DownloadModel alloc] init];
         _downloadModel.delegate = self;
@@ -78,16 +75,6 @@
             return NSBlockReturnTypeAutomatic;
         }];
         
-        
-        for (NSDictionary * dic in _allChapters) {
-            int state = [[dic objectForKey:@"downloadState"] intValue];
-            if (state == DownloadState_Complete) {
-                [_hasDownloadesChapters addObject:dic];
-            }else if (state == DownloadState_Loading) {
-                [self addChapter2WaitingLoadList:dic];
-            }
-        }
-
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(saveBeforeQuit)
                                                      name:UIApplicationWillTerminateNotification
@@ -97,6 +84,17 @@
                                                  selector:@selector(saveBeforeQuit)
                                                      name:UIApplicationWillResignActiveNotification
                                                    object:nil];
+
+        for (NSMutableDictionary * dic in _allChapters) {
+            if ([[dic objectForKey:@"downloadState"] intValue] == DownloadState_Loading) {
+                self.curDownloadDic = dic;
+                int chaptid = [[dic objectForKey:@"_id"] intValue];
+                NSString * url = [dic objectForKey:@"file_url"];
+                [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Loading] forKey:@"downloadState"];
+                [_downloadModel downloadNetMediaWithUrl:url tag:chaptid validator:nil];
+                break;
+            }
+        }
 
     }
     return self;
@@ -111,24 +109,6 @@
 
 }
 
-- (DownloadState)downloadStateWithChapterId:(NSInteger)chapterId {
-    if (chapterId == _downloadingChapterId) {
-        return DownloadState_Loading;
-    }
-    for (NSDictionary * dic in _hasDownloadesChapters) {
-        if ([[dic objectForKey:@"_id"] integerValue] == chapterId) {
-            return DownloadState_Complete;
-        }
-    }
-    
-    for (NSDictionary * dic in _waitingDownloadChapter) {
-        if ([[dic objectForKey:@"_id"] integerValue] == chapterId) {
-            return DownloadState_Loading;
-        }
-    }
-    
-    return DownloadState_None;
-}
 
 - (NSDictionary *)chapterWithChapterId:(NSInteger)chapterId {
     for (NSDictionary * dic in _allChapters) {
@@ -139,10 +119,35 @@
     return nil;
 }
 
+- (void)pauseChapterWithChapterId:(NSInteger)chapterId {
+    for (NSMutableDictionary * dic in _allChapters) {
+        if ([[dic objectForKey:@"_id"] integerValue] == chapterId) {
+            int state = [[dic objectForKey:@"downloadState"] intValue];
+            if (state == DownloadState_Loading) {
+                [_downloadModel stop];
+                self.curDownloadDic = nil;
+            }
+            [dic setObject:[NSNumber numberWithInt:DownloadState_Pause] forKey:@"downloadState"];
+        }
+    }
+}
+
+- (void)resumeChapterWithChapterId:(NSInteger)chapterId {
+    for (NSMutableDictionary * dic in _allChapters) {
+        if ([[dic objectForKey:@"_id"] integerValue] == chapterId) {
+            [dic setObject:[NSNumber numberWithInt:DownloadState_Waiting] forKey:@"downloadState"];
+            if (self.curDownloadDic == nil) {
+                [_downloadModel resume];
+                [self checkForDownload];
+            }
+        }
+    }
+}
+
 - (void)downLoadCourse:(NSDictionary *)courseInfo chapters:(NSArray *)chapters {
     BOOL exist = NO;
     for (int ii=0; ii<_allCourses.count; ii++) {
-        NSDictionary * dic = [_allCourses objectAtIndex:ii];
+        NSMutableDictionary * dic = [_allCourses objectAtIndex:ii];
         if ([[dic objectForKey:@"_id"] integerValue] == [[courseInfo objectForKey:@"_id"] integerValue]) {
             [_allCourses replaceObjectAtIndex:ii withObject:courseInfo];
             exist = YES;
@@ -153,110 +158,120 @@
         [_allCourses addObject:courseInfo];
     }
     
-    //
-    for (int ii=0; ii<chapters.count; ii++) {
-        [self addChapter2WaitingLoadList:[chapters objectAtIndex:ii]];
-    }
-    
-}
-
-- (void)addChapter2WaitingLoadList:(NSDictionary *)chapter {
-    int chapterid = [[chapter objectForKey:@"_id"] intValue];
-    for (NSDictionary * dic in _allChapters) {
-        if ([[dic objectForKey:@"_id"] intValue] == chapterid && [[dic objectForKey:@"downloadState"] intValue] == DownloadState_Complete) {
-            return;
+    for (NSMutableDictionary * dic in chapters) {
+        if (![_allChapters containsObject:dic]) {
+            [dic setObject:[NSNumber numberWithInt:DownloadState_Waiting] forKey:@"downloadState"];
+            [_allChapters addObject:dic];
         }
     }
     
-    [_allChapters addObject:chapter];
+    [self checkForDownload];
     
-    self.downloadFinished = NO;
-    [_waitingDownloadChapter addObject:chapter];
-    if (_waitingDownloadChapter.count == 1) { // 开始下载
-        [self go2Download];
+}
+
+- (void)deleteChapterWithChapterId:(NSInteger)chapterId {
+    for (NSMutableDictionary * dic in _allChapters) {
+        if ([dic intValue:@"_id"] == chapterId) {
+            NSString * url = [dic strValue:@"file_url"];
+            NSString * path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            path = [path stringByAppendingPathComponent:DownloadFilePath];
+            [path stringByAppendingPathComponent:[url md5]];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+            }
+            FMDatabaseQueue* queue = [HDBHelper shareQueue];
+            
+            [queue inDatabase:^(FMDatabase *db){
+                NSString *deletetopic = [NSString stringWithFormat:@"delete from %@ where _id=%d",k_Table_D_Chapter,chapterId];
+                [db executeUpdate:deletetopic];
+            }];
+            break;
+        }
     }
+    
+    [self performSelectorOnMainThread:@selector(deleteChapterFinish) withObject:nil waitUntilDone:YES];
 
 }
 
-- (void)go2Download {
-    if (_waitingDownloadChapter.count > 0) {
-        NSDictionary * dic = [_waitingDownloadChapter objectAtIndex:0];
-        int chaptid = [[dic objectForKey:@"_id"] intValue];
-        _downloadingChapterId = chaptid;
-        NSString * url = [dic objectForKey:@"file_url"];
-        if (url && url.length > 0) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Start object:nil];
+- (void)deleteChapterFinish {
+    [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_UpdateData object:nil];
+
+}
+
+- (void)checkForDownload {
+    if (self.curDownloadDic == nil) {
+        for (NSMutableDictionary * dic in _allChapters) {
+            if ([[dic objectForKey:@"downloadState"] intValue] == DownloadState_Waiting) {
+                self.curDownloadDic = dic;
+                int chaptid = [[dic objectForKey:@"_id"] intValue];
+                NSString * url = [dic objectForKey:@"file_url"];
+                [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Loading] forKey:@"downloadState"];
+                [_downloadModel downloadNetMediaWithUrl:url tag:chaptid validator:nil];
+                break;
+            }
+        }
+    }
+    
+}
+
+- (void)checkForDownloadWithLastCourseId:(NSInteger)courseId {
+    if (self.curDownloadDic) {
+        return;
+    }
+    BOOL find = NO;
+    for (NSMutableDictionary * dic in _allChapters) {
+        if ([[dic objectForKey:@"downloadState"] intValue] == DownloadState_Waiting && [[dic objectForKey:@"course_id"] integerValue] == courseId) {
+            find = YES;
+            self.curDownloadDic = dic;
+            int chaptid = [[dic objectForKey:@"_id"] intValue];
+            NSString * url = [dic objectForKey:@"file_url"];
+            [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Loading] forKey:@"downloadState"];
             [_downloadModel downloadNetMediaWithUrl:url tag:chaptid validator:nil];
+            break;
         }
-    }else {
-        NSLog(@"下载完毕");
-        [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Finished object:nil];
     }
-}
-
-- (void)stop {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"pause"];
-    [_downloadModel stop];
-}
-
-- (void)resume {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"pause"];
-    [_downloadModel resume];
-    [self go2Download];
-}
-
-- (BOOL)isPaused {
-    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"pause"] boolValue];
+    if (!find) {
+        [self checkForDownload];
+    }
 }
 
 - (void)didFileDownloaded:(NSString*)path tag:(NSInteger)tag validator:(id)validator {
-    if (_waitingDownloadChapter.count > 0) {
-        NSDictionary * dic = [_waitingDownloadChapter objectAtIndex:0];
+    if (self.curDownloadDic != nil) {
+        [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Complete] forKey:@"downloadState"];
         
-        NSMutableDictionary * chaptdic = [NSMutableDictionary dictionaryWithDictionary:dic];
-        [chaptdic setObject:[NSNumber numberWithInt:DownloadState_Complete] forKey:@"downloadState"];
-        
-        NSInteger index = [_allChapters indexOfObject:dic];
-        if (index == NSNotFound) {
-            [_allChapters addObject:chaptdic];
+        int index = NSNotFound;
+        for (int ii=0;ii<_allChapters.count;ii++) {
+            NSDictionary * dic  = [_allChapters objectAtIndex:ii];
+            if ([dic objectForKey:@"_id"] == [self.curDownloadDic objectForKey:@"_id"]) {
+                index = ii;
+            }
+        }
+        if (index != NSNotFound) {
+            [_allChapters replaceObjectAtIndex:index withObject:self.curDownloadDic];
         }else {
-            [_allChapters replaceObjectAtIndex:index withObject:chaptdic];
+            [_allChapters insertObject:self.curDownloadDic atIndex:0];
         }
+        NSInteger courseId = [[self.curDownloadDic objectForKey:@"course_id"] integerValue];
+        self.curDownloadDic = nil;
         
-        index = [_hasDownloadesChapters indexOfObject:dic];
-        if (index == NSNotFound) {
-            [_hasDownloadesChapters insertObject:chaptdic atIndex:0];
-        }else {
-            [_hasDownloadesChapters replaceObjectAtIndex:index withObject:chaptdic];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Finished object:nil];
+
+        [self checkForDownloadWithLastCourseId:courseId];
         
-        @synchronized(_waitingDownloadChapter){
-            [_waitingDownloadChapter removeObjectAtIndex:0];
-            [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Update object:nil];
-            [self go2Download];
-        }
     }
 }
 
 - (void)didFileDownloadReceiveBytes:(long long)bytes {
-//    NSLog(@"%lld",bytes);
-    
-    /*
-     http://ziyue.tv/file/video/ch_id/152951/token/5273021160b4c.html -- d73de3aaeea590dccbefa0bb80c85675
-     http://ziyue.tv/file/video/ch_id/152954/token/5273021160e3e.html -- 0f7a066f3ea78bc24e7e3400c88bf023
-     
-     http://ziyue.tv/file/video/ch_id/152951/token/5273021160b4c.html -- d73de3aaeea590dccbefa0bb80c85675
-     http://ziyue.tv/file/video/ch_id/152953/token/5273021160cfd.html -- 4bcd6a369e34f35c3f3091c8ef0963b6
-     
-     http://ziyue.tv/file/video/ch_id/152951/token/5273021160b4c.html -- d73de3aaeea590dccbefa0bb80c85675
-     */
+    if (self.curDownloadDic) {
+        long size = [[self.curDownloadDic objectForKey:@"downloadSize"] longValue];
+        size += bytes;
+        [self.curDownloadDic setObject:[NSNumber numberWithLong:size] forKey:@"downloadSize"];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Update object:nil];
 }
 
 - (void)didFileDownLoadedFailed:(int)tag {
     NSLog(@"file download failed");
-//    [self stop];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:K_Download_Notification_Finished object:nil];
-
 }
 
 - (void)loadAllData {
@@ -278,7 +293,7 @@
             NSString * desp_cn = [rs stringForColumn:@"desp_cn"];
             NSString * category = [rs stringForColumn:@"category"];
             NSInteger chatnum = [rs intForColumn:@"chapterNum"];
-            NSDictionary * dic = [NSDictionary dictionaryWithObjects:
+            NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObjects:
                                   [NSArray arrayWithObjects:
                                    [NSNumber numberWithInteger:coursid],cover,title,author,desp_cn,category,[NSNumber numberWithInteger:chatnum], nil] forKeys:
                                   [NSArray arrayWithObjects:@"_id",@"cover",@"title_ch",@"author",@"desc",@"subject",@"chaptnum", nil]];
@@ -296,7 +311,7 @@
             int state = [rss intForColumn:@"downloadState"];
             long downloadSize = [rss longForColumn:@"cp_downloadSize"];
             long totalSize = [rss longForColumn:@"cp_totalSize"];
-            NSDictionary * dic = [NSDictionary dictionaryWithObjects:
+            NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithObjects:
                                   [NSArray arrayWithObjects:
                                    [NSNumber numberWithInteger:chapterid],[NSNumber numberWithInteger:courseid],durationStr,title,url,[NSNumber numberWithInt:state], [NSNumber numberWithLong:downloadSize], [NSNumber numberWithLong:totalSize], nil] forKeys:
                                   [NSArray arrayWithObjects:@"_id",@"course_id",@"dur",@"title",@"file_url",@"downloadState", @"downloadSize", @"totalSize", nil]];
@@ -358,6 +373,13 @@
 }
 
 - (void)saveBeforeQuit {
+    if (self.curDownloadDic) {
+        for (NSMutableDictionary * dic in _allChapters) {
+            if ([dic intValue:@"_id"] == [self.curDownloadDic intValue:@"_id"]) {
+                [dic setObject:[self.curDownloadDic objectForKey:@"downloadSize"] forKey:@"downloadSize"];
+            }
+        }
+    }
     NSMutableArray * coursearray = [NSMutableArray arrayWithArray:_allCourses];
     NSMutableArray * chapterarray = [NSMutableArray arrayWithArray:_allChapters];
     

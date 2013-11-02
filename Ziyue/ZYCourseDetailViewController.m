@@ -384,20 +384,16 @@
 - (void)apiSuccessedWithDictionary:(NSDictionary *)dictionary ForApi:(NSString *)api {
     NSDictionary * dic = [[dictionary objectForKey:@"data"] objectForKey:@"course"];
     
-//    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[dic objectForKey:@"author"] message:[dic objectForKey:@"title_ch"] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-//    [alert show];
-    
     self.courseInfoDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     [self refreshTopViewWithData];
     
     NSMutableArray * chapters = [[dictionary objectForKey:@"data"] objectForKey:@"chapters"];
-//    NSLog(@"%@",chapters);
     if (![chapters isKindOfClass:[NSMutableArray class]]) {
         return;
     }
     
     for (int ii=0; ii<chapters.count; ii++) {
-        NSDictionary * item = [chapters objectAtIndex:ii];
+        NSMutableDictionary * item = [chapters objectAtIndex:ii];
         if ([[item objectForKey:@"level"] intValue] == 2) {
             [_dataArray addObject:item];
         }
