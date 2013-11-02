@@ -31,7 +31,7 @@
 
 - (void)initial {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_UpdateData object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_Update object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:K_Download_Notification_Finished object:nil];
     [self updateData:nil];
     
 }
@@ -179,7 +179,7 @@
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.tag = 104;
         button.frame = CGRectMake(0, 0, 40, 40);
-        button.center = CGPointMake(270, 25);
+        button.center = CGPointMake(280, 25);
         [button addTarget:self action:@selector(playButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         button.backgroundColor = [UIColor redColor];
         [button setTitle:@"播放" forState:UIControlStateNormal];

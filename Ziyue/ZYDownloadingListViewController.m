@@ -117,14 +117,13 @@
         [cell.contentView addSubview:titleLabel];
         titleLabel = nil;
         
-        UILabel * sizelabel = [[UILabel alloc] initWithFrame:CGRectMake(10+CGRectGetWidth(tableView.frame)/2, 25, CGRectGetWidth(tableView.frame)/2-10, 15)];
+        UILabel * sizelabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, CGRectGetWidth(tableView.frame)/2-10, 15)];
         sizelabel.font = [UIFont systemFontOfSize:13];
         sizelabel.tag = 102;
-        sizelabel.textAlignment = UITextAlignmentRight;
         [cell.contentView addSubview:sizelabel];
         sizelabel = nil;
         
-        UIProgressView * progress = [[UIProgressView alloc] initWithFrame:CGRectMake(10, 20, 280, 10)];
+        UIProgressView * progress = [[UIProgressView alloc] initWithFrame:CGRectMake(10, 20, 255, 10)];
         progress.progressViewStyle = UIProgressViewStyleBar;
         progress.tag = 103;
         [cell.contentView addSubview:progress];
@@ -133,7 +132,7 @@
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.tag = 104;
         button.frame = CGRectMake(0, 0, 40, 40);
-        button.center = CGPointMake(270, 25);
+        button.center = CGPointMake(290, 25);
         [button addTarget:self action:@selector(playButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         button.backgroundColor = [UIColor redColor];
         [button setTitle:@"播放" forState:UIControlStateNormal];
