@@ -90,8 +90,9 @@
                 self.curDownloadDic = dic;
                 int chaptid = [[dic objectForKey:@"_id"] intValue];
                 NSString * url = [dic objectForKey:@"file_url"];
+                NSString * filename = [dic objectForKey:@"filename"];
                 [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Loading] forKey:@"downloadState"];
-                [_downloadModel downloadNetMediaWithUrl:url tag:chaptid validator:nil];
+                [_downloadModel downloadNetMediaWithUrl:url tag:chaptid fileName:filename];
                 break;
             }
         }
@@ -230,8 +231,9 @@
                 self.curDownloadDic = dic;
                 int chaptid = [[dic objectForKey:@"_id"] intValue];
                 NSString * url = [dic objectForKey:@"file_url"];
+                NSString * filename = [dic objectForKey:@"filename"];
                 [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Loading] forKey:@"downloadState"];
-                [_downloadModel downloadNetMediaWithUrl:url tag:chaptid validator:nil];
+                [_downloadModel downloadNetMediaWithUrl:url tag:chaptid fileName:filename];
                 break;
             }
         }
@@ -250,8 +252,9 @@
             self.curDownloadDic = dic;
             int chaptid = [[dic objectForKey:@"_id"] intValue];
             NSString * url = [dic objectForKey:@"file_url"];
+            NSString * filename = [dic objectForKey:@"filename"];
             [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Loading] forKey:@"downloadState"];
-            [_downloadModel downloadNetMediaWithUrl:url tag:chaptid validator:nil];
+            [_downloadModel downloadNetMediaWithUrl:url tag:chaptid fileName:filename];
             break;
         }
     }
@@ -260,7 +263,7 @@
     }
 }
 
-- (void)didFileDownloaded:(NSString*)path tag:(NSInteger)tag validator:(id)validator {
+- (void)didFileDownloaded:(NSString*)path tag:(NSInteger)tag {
     if (self.curDownloadDic != nil) {
         [self.curDownloadDic setObject:[NSNumber numberWithInt:DownloadState_Complete] forKey:@"downloadState"];
         
@@ -287,6 +290,7 @@
 }
 
 - (void)didFileDownloadReceiveBytes:(long long)bytes {
+    NSLog(@"%lld",bytes);
     if (self.curDownloadDic) {
         long size = [[self.curDownloadDic objectForKey:@"downloadSize"] longValue];
         size += bytes;
@@ -359,11 +363,11 @@
         db.logsErrors = YES;
         
         NSInteger coursid = [[courseInfo objectForKey:@"_id"] integerValue];
-        NSString * cover = [courseInfo objectForKey:@"cover"];
-        NSString * title = [courseInfo objectForKey:@"title_ch"];
-        NSString * author = [courseInfo objectForKey:@"author"];
-        NSString * desp_cn = [courseInfo objectForKey:@"desc"];
-        NSString * category = [courseInfo objectForKey:@"subject"];
+        NSString * cover = [courseInfo strValue:@"cover"];
+        NSString * title = [courseInfo strValue:@"title_ch"];
+        NSString * author = [courseInfo strValue:@"author"];
+        NSString * desp_cn = [courseInfo strValue:@"desc"];
+        NSString * category = [courseInfo strValue:@"subject"];
         NSInteger chatnum = [[courseInfo objectForKey:@"chaptnum"] integerValue];
         
         NSString *userSql = [NSString stringWithFormat:@"REPLACE INTO %@ (courseId,cover,title,author,desp_cn,category,chapterNum) values (%d,'%@','%@','%@','%@','%@',%d)",k_Table_D_Course,coursid,cover,title,author,desp_cn,category,chatnum];

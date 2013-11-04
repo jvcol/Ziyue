@@ -5,7 +5,7 @@
 
 @protocol DownloadModelDelegate <NSObject>
 
-- (void)didFileDownloaded:(NSString*)path tag:(NSInteger)tag validator:(id)validator;
+- (void)didFileDownloaded:(NSString*)path tag:(NSInteger)tag;
 - (void)didFileDownloadReceiveBytes:(long long)bytes;
 - (void)didFileDownLoadedFailed:(int)tag;
 
@@ -23,7 +23,7 @@
 - (void)resume;
 //
 
-- (void)downloadNetMediaWithUrl:(NSString*)fullUrl tag:(int)tag validator:(id)validator;
+- (void)downloadNetMediaWithUrl:(NSString*)fullUrl tag:(int)tag fileName:(NSString *)fileName;
 
 
 @end

@@ -9,6 +9,7 @@
 #import "ZYDownloadingListViewController.h"
 #import "Utility.h"
 #import "ZYDataCenter.h"
+#import "VedioViewController.h"
 
 @interface ZYDownloadingListViewController ()
 
@@ -110,14 +111,14 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIndentifier];
         
-        UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, CGRectGetWidth(tableView.frame)/2-10, 15)];
+        UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 250, 15)];
         titleLabel.numberOfLines = 2;
         titleLabel.font = [UIFont systemFontOfSize:13];
         titleLabel.tag = 101;
         [cell.contentView addSubview:titleLabel];
         titleLabel = nil;
         
-        UILabel * sizelabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, CGRectGetWidth(tableView.frame)/2-10, 15)];
+        UILabel * sizelabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 250, 15)];
         sizelabel.font = [UIFont systemFontOfSize:13];
         sizelabel.tag = 102;
         [cell.contentView addSubview:sizelabel];
@@ -174,6 +175,23 @@
     }
     NSIndexPath * indexPath = [_myTableView indexPathForCell:cell];
     NSDictionary * dic = [[[_dataArray objectAtIndex:indexPath.section-1] objectForKey:@"chapters"] objectAtIndex:indexPath.row];
+
+    NSString * url = [dic objectForKey:@"filename"];
+    
+    NSString * str = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    str = [str stringByAppendingPathComponent:DownloadFilePath];
+    NSString * path = [str stringByAppendingPathComponent:url];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        VedioViewController * playerViewController = [[VedioViewController alloc] initWithContentURL:[NSURL fileURLWithPath:path]];
+        playerViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        MPMoviePlayerController *player = [playerViewController moviePlayer];
+        player.repeatMode = MPMovieRepeatModeOne;
+        player.shouldAutoplay = NO;
+        player.movieSourceType = MPMovieSourceTypeFile;
+        [self presentMoviePlayerViewControllerAnimated:playerViewController];
+        [player prepareToPlay];
+        [player play];
+    }
 
 }
 

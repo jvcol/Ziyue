@@ -212,20 +212,20 @@
     NSIndexPath * indexPath = [_myTableView indexPathForCell:cell];
     NSDictionary * dic = [[[_dataArray objectAtIndex:indexPath.section-1] objectForKey:@"chapters"] objectAtIndex:indexPath.row];
     
-    NSString * url = [dic objectForKey:@"file_url"];
+    NSString * url = [dic objectForKey:@"filename"];
     
     NSString * str = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     str = [str stringByAppendingPathComponent:DownloadFilePath];
-    NSString * path = [str stringByAppendingPathComponent:[url md5]];
+    NSString * path = [str stringByAppendingPathComponent:url];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-//        path = [path stringByAppendingPathExtension:@"mp4"];
-        VedioViewController * playerViewController = [[VedioViewController alloc] initWithContentURL:[NSURL URLWithString:url]];
+        VedioViewController * playerViewController = [[VedioViewController alloc] initWithContentURL:[NSURL fileURLWithPath:path]];
         playerViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         MPMoviePlayerController *player = [playerViewController moviePlayer];
         player.repeatMode = MPMovieRepeatModeOne;
-        [player setContentURL:[NSURL fileURLWithPath:path]];
+        player.shouldAutoplay = NO;
         player.movieSourceType = MPMovieSourceTypeFile;
         [self presentMoviePlayerViewControllerAnimated:playerViewController];
+        [player prepareToPlay];
         [player play];
     }
 

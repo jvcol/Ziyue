@@ -51,7 +51,7 @@
 	[networkQueue setDelegate:self];
 }
 
-- (void)downloadNetMediaWithUrl:(NSString *)fullUrl tag:(int)tag validator:(id)validator {
+- (void)downloadNetMediaWithUrl:(NSString *)fullUrl tag:(int)tag fileName:(NSString *)fileName {
     NSURL *url = [NSURL URLWithString:fullUrl];
     
     NSString * str = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -63,7 +63,7 @@
                                                    attributes:nil
                                                         error:NULL];
     }
-    NSString * path = [str stringByAppendingPathComponent:[fullUrl md5]];
+    NSString * path = [str stringByAppendingPathComponent:fileName];
     
     ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
     [request setShowAccurateProgress:YES];
@@ -71,13 +71,11 @@
     [request setAllowResumeForFileDownloads:YES];
     
     [request setUserAgent:CLIENT_AGENT];
-    [request setUserInfo:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:path, fullUrl,[NSNumber numberWithInt:tag], [NSValue valueWithNonretainedObject:validator], @"voice",nil] forKeys:[NSArray arrayWithObjects:@"path",@"fullpath", @"tag",@"validator",@"type", nil]]];
-    [request setTag:2];         //1代表图片访问, 2代表声音访问
-    
+    [request setUserInfo:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:path, fullUrl,[NSNumber numberWithInt:tag],fileName, nil] forKeys:[NSArray arrayWithObjects:@"path",@"fullurl", @"tag",@"filename", nil]]];
 //    if (!hdEnsurePath([path stringByDeletingLastPathComponent]))
 //        return;
     if ([[NSFileManager defaultManager] fileExistsAtPath:path] == YES) {
-		[self fileDownloaded:request.userInfo forType:request.tag];
+		[self fileDownloaded:request.userInfo forType:tag];
         return;
 	}
     [request setDownloadDestinationPath:path];
@@ -128,9 +126,8 @@
 - (void)fileDownloaded:(NSDictionary*)userInfo forType:(NSInteger)fileType {
     NSString *path = [userInfo objectForKey:@"path"];
     NSInteger tag = [[userInfo objectForKey:@"tag"] intValue];
-    id validator = [[userInfo objectForKey:@"validator"] nonretainedObjectValue];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didFileDownloaded:tag:validator:)]) {
-        [self.delegate didFileDownloaded:path tag:tag validator:validator];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didFileDownloaded:tag:)]) {
+        [self.delegate didFileDownloaded:path tag:tag];
     }
 }
 
