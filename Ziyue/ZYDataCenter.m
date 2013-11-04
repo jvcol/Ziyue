@@ -170,27 +170,52 @@
 }
 
 - (void)deleteChapterWithChapterId:(NSInteger)chapterId {
+    NSInteger index = NSNotFound;
+    NSDictionary * dictmp = nil;
     for (NSMutableDictionary * dic in _allChapters) {
         if ([dic intValue:@"_id"] == chapterId) {
-            NSString * url = [dic strValue:@"file_url"];
-            NSString * path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            path = [path stringByAppendingPathComponent:DownloadFilePath];
-            [path stringByAppendingPathComponent:[url md5]];
-            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-                [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-            }
-            FMDatabaseQueue* queue = [HDBHelper shareQueue];
-            
-            [queue inDatabase:^(FMDatabase *db){
-                NSString *deletetopic = [NSString stringWithFormat:@"delete from %@ where _id=%d",k_Table_D_Chapter,chapterId];
-                [db executeUpdate:deletetopic];
-            }];
-            break;
+            index = [_allChapters indexOfObject:dic];
+            dictmp = dic;
         }
     }
+    if (self.curDownloadDic && [[self.curDownloadDic objectForKey:@"_id"] integerValue] == chapterId) { // 正在下载
+        // 找到下个
+        self.curDownloadDic = nil;
+        [_downloadModel stop];
+        if (index != NSNotFound) {
+            [_allChapters removeObjectAtIndex:index];
+        }
+        [_downloadModel resume];
+        [self checkForDownloadWithLastCourseId:[self.curDownloadDic intValue:@"course_id"]];
+    }
+    else {
+        if (index != NSNotFound) {
+            [_allChapters removeObjectAtIndex:index];
+        }
+    }
+
+    [self performSelectorInBackground:@selector(deleteChapterStart:) withObject:dictmp];
+}
+
+- (void)deleteChapterStart:(NSDictionary *)dic {
+    NSInteger chapterId = [dic intValue:@"_id"];
+    NSString * url = [dic strValue:@"file_url"];
+    NSString * path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    path = [path stringByAppendingPathComponent:DownloadFilePath];
+    [path stringByAppendingPathComponent:[url md5]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    }
+    FMDatabaseQueue* queue = [HDBHelper shareQueue];
+    
+    [queue inDatabase:^(FMDatabase *db){
+        NSString *deletetopic = [NSString stringWithFormat:@"delete from %@ where _id=%d",k_Table_D_Chapter,chapterId];
+        [db executeUpdate:deletetopic];
+    }];
+    
     
     [self performSelectorOnMainThread:@selector(deleteChapterFinish) withObject:nil waitUntilDone:YES];
-
+    
 }
 
 - (void)deleteChapterFinish {
@@ -377,6 +402,7 @@
         for (NSMutableDictionary * dic in _allChapters) {
             if ([dic intValue:@"_id"] == [self.curDownloadDic intValue:@"_id"]) {
                 [dic setObject:[self.curDownloadDic objectForKey:@"downloadSize"] forKey:@"downloadSize"];
+                [dic setObject:[self.curDownloadDic objectForKey:@"downloadState"] forKey:@"downloadState"];
             }
         }
     }

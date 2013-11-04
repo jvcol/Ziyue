@@ -149,6 +149,9 @@
 }
 
 - (void)downLoad {
+    if (type == 1) {
+        return;
+    }
     _isEditingModel = !_isEditingModel;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:_isEditingModel ? @"完成": @"下载" style:UIBarButtonItemStylePlain target:self action:@selector(downLoad)];
     [_myTableView reloadData];

@@ -53,7 +53,7 @@
     _myTableView.backgroundColor = [UIColor clearColor];
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
-    _myTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _myTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_myTableView];
     _myTableView.hidden = YES;
     
