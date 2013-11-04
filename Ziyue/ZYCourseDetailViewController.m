@@ -304,10 +304,13 @@
     cell.textLabel.numberOfLines = 2;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"[第%d课]   时长:%@",indexPath.row+1,[dic objectForKey:@"dur"]];
     
+    BOOL hasDownload = [[ZYDataCenter instance] hasDownloadedWithChapterId:[dic intValue:@"_id"]];
+    
     UIButton * button = (UIButton *)[cell.contentView viewWithTag:100];
     if (button && [button isKindOfClass:[UIButton class]]) {
         [cell.contentView bringSubviewToFront:button];
-        button.hidden = !_isEditingModel;
+        button.hidden = (!_isEditingModel || hasDownload);
+        
         if (_selected2Download && [_selected2Download containsObject:[NSNumber numberWithInt:indexPath.row]]) {
             [button setTitle:@"已选" forState:UIControlStateNormal];
             [button setTitleColor:RGB3(240) forState:UIControlStateNormal];
@@ -350,11 +353,9 @@
         NSString * url = [dic objectForKey:@"file_url"];
         if (url && url.length > 0) {
             VedioViewController * playerViewController = [[VedioViewController alloc] initWithContentURL:[NSURL URLWithString:url]];
-            playerViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             MPMoviePlayerController *player = [playerViewController moviePlayer];
             player.repeatMode = MPMovieRepeatModeOne;
             [player setContentURL:[NSURL URLWithString:url]];
-//            [self presentModalViewController:playerViewController animated:animated];
             [self presentMoviePlayerViewControllerAnimated:playerViewController];
             [player play];
         }

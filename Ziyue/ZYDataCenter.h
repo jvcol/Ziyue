@@ -39,6 +39,7 @@ typedef enum {
 - (void)pauseChapterWithChapterId:(NSInteger)chapterId;
 - (void)resumeChapterWithChapterId:(NSInteger)chapterId;
 
+- (BOOL)hasDownloadedWithChapterId:(NSInteger)chapterId;
 
 - (void)deleteChapterWithChapterId:(NSInteger)chapterId;
 

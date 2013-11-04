@@ -170,6 +170,16 @@
     
 }
 
+- (BOOL)hasDownloadedWithChapterId:(NSInteger)chapterId {
+    
+    for (NSMutableDictionary * dic in _allChapters) {
+        if ([dic intValue:@"_id"] == chapterId) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)deleteChapterWithChapterId:(NSInteger)chapterId {
     NSInteger index = NSNotFound;
     NSDictionary * dictmp = nil;
