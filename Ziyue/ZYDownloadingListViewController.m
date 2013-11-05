@@ -150,7 +150,7 @@
     }
     
     long long dsize = [[dic objectForKey:@"downloadSize"] longLongValue];
-    long long tsize = [[dic objectForKey:@"totalSize"] longLongValue];
+    long long tsize = 1024*1024*20;//[[dic objectForKey:@"totalSize"] longLongValue];
     
     label = (UILabel *)[cell.contentView viewWithTag:102];
     if (label) {

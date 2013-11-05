@@ -376,14 +376,21 @@
         NSString * cover = [courseInfo strValue:@"cover"];
         NSString * title = [courseInfo strValue:@"title_ch"];
         NSString * author = [courseInfo strValue:@"author"];
-        NSString * desp_cn = [courseInfo strValue:@"desc"];
+        NSString * desp_cn = [courseInfo objectForKey:@"desc"];
         NSString * category = [courseInfo strValue:@"subject"];
         NSInteger chatnum = [[courseInfo objectForKey:@"chaptnum"] integerValue];
-        
+        desp_cn = [desp_cn stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+//        NSLog(@"%@",desp_cn);
         NSString *userSql = [NSString stringWithFormat:@"REPLACE INTO %@ (courseId,cover,title,author,desp_cn,category,chapterNum) values (%d,'%@','%@','%@','%@','%@',%d)",k_Table_D_Course,coursid,cover,title,author,desp_cn,category,chatnum];
         [db executeUpdate:userSql];
         
     }];
+    
+    /*
+     [NSArray arrayWithObjects:@"_id",@"cover",@"title_ch",@"author",@"desc",@"subject",@"chaptnum", nil]];
+
+     NSString *create_course_sql = [NSString stringWithFormat:@"CREATE TABLE if not exists %@ (courseId integer PRIMARY KEY,cover text ,title text,author text,desp_cn text,category text,chapterNum integer);", k_Table_D_Course] ;
+*/
     
 }
 
