@@ -153,13 +153,4 @@
 }
 
 
-#pragma mark ASIHTTPRequestDelegate
-- (void)requestFinished:(ASIHTTPRequest *)request {
-    
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request {
-    
-}
-
 @end

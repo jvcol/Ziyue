@@ -123,29 +123,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft];
-    /*
-     - (void)showAlbum {
-     // check current orientation
-     if ([[UIApplication sharedApplication] statusBarOrientation] != UIInterfaceOrientationLandscapeLeft) {
-     // no, the orientation is wrong, we must rotate the UI
-     self.navigationController.view.userInteractionEnabled = NO;
-     [UIView beginAnimations:@"newAlbum" context:NULL];
-     [UIView setAnimationDelegate:self];
-     // when rotation is done, we can add new views, because UI orientation is OK
-     [UIView setAnimationDidStopSelector:@selector(addAlbum)];
-     // setup status bar
-     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeLeft  animated:NO];
-     // rotate main view, in this sample the view of navigation controller is the root view in main window
-     [self.navigationController.view setTransform: CGAffineTransformMakeRotation(M_PI / 2)];
-     // set size of view
-     [self.navigationController.view setFrame:CGRectMake(0, 0, 748, 1024)];
-     [UIView commitAnimations];
-     } else {
-     [self addAlbum];
-     }
-     
-     }*/
 }
 
 - (void)downLoad {
