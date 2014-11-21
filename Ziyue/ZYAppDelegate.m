@@ -29,8 +29,6 @@
     [ZYDataCenter instance];
     NSLog(@"%@",[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
     
-    
-    
 //    NSString * str = @"http://ziyue.tv/file/video/ch_id/152951/token/52726013ce1cf.html";
 //    NSLog(@"%@",[str md5]);
 //    NSLog(@"%@",[str md5]);
